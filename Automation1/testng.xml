@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Functional Suite">
+
+<listeners>
+<!--<listener class-name="com.test.automation.uiautomation.customListener.Listener"></listener>--> 
+<!--<listener class-name="com.test.automation.uiAutomation.customListener.RetryListener"></listener>--> 
+</listeners>
+  
+<test name="LandingPageTest">
+    <classes>
+      <class name="homepage.TC001_VerifyLandingpage"/>
+      
+    </classes>
+  </test> 
+  
+  
+ 
+  
+  
+</suite> 

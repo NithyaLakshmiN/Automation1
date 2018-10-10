@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Functional Suite]">
+  <test thread-count="5" name="LandingPageTest(failed)">
+    <classes>
+      <class name="homepage.TC001_VerifyLandingpage">
+        <methods>
+          <include name="LandingPage"/>
+          <include name="endTest"/>
+          <include name="setUp"/>
+          <include name="afterMethod"/>
+          <include name="beforeMethod"/>
+        </methods>
+      </class> <!-- homepage.TC001_VerifyLandingpage -->
+    </classes>
+  </test> <!-- LandingPageTest(failed) -->
+</suite> <!-- Failed suite [Functional Suite] -->
