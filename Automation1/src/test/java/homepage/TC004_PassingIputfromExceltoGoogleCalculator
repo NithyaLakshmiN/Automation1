@@ -1,0 +1,102 @@
+package homepage;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.testng.annotations.Test;
+
+import uiActions.HomePage;
+
+public class TC004_PassingIputfromExceltoGoogleCalculator {
+	
+	WebDriver driver;
+    XSSFWorkbook workbook;
+    XSSFSheet sheet;
+    XSSFCell cell;
+    HomePage homepage;
+
+@Test
+public void ReadData() throws IOException, Exception{	
+	
+	
+	System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir") + "/drivers/chromedriver.exe");
+	driver = new ChromeDriver();
+     
+    // To launch Application
+	 driver.get("https://www.google.com/");
+    // To maximize the browser
+    driver.manage().window().maximize();
+    // implicit wait
+    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+    
+    driver.findElement(By.id("lst-ib")).sendKeys("Calculator");
+	driver.findElement(By.xpath("/html/body/div[1]/div[3]/form/div[2]/div[3]/center/input[1]")).click();
+	
+	
+	
+	// Import excel sheet.
+			File src=new File("C:\\Users\\nisantho\\Documents\\Nithya\\MyCalculator\\src\\main\\java\\data\\TestData.xlsx");
+	// Load the file.
+			FileInputStream fis = new FileInputStream(src);
+	// Load the workbook.
+			workbook = new XSSFWorkbook(fis);	
+	// Load the sheet in which data is stored.
+			sheet= workbook.getSheet("InputTestData");	
+	//Import InputData		
+			for(int i=1; i<=sheet.getLastRowNum(); i++){
+				/*I have added test data in the cell A2 as "4" 
+				Cell A2 = row 1 and column 0. It reads first row as 0, second row as 1 and so on 
+				and first column (A) as 0 and second column (B) as 1 and so on*/ 
+			
+				// Import data.
+				double n1 = sheet.getRow(i).getCell(0).getNumericCellValue();
+				String num1 = Double.toString(n1);
+				Actions actions = new Actions(driver);
+				Actions input1= actions.moveToElement(driver.findElement(By.cssSelector("div.cwtlotc")));
+				input1.sendKeys(num1);
+				actions.build().perform();
+			    System.out.println(num1);
+			    
+			    Thread.sleep(8000);
+			    
+			    driver.findElement(By.cssSelector("#cwbt46 .cwbts")).click();
+			    
+			
+			// Import data.
+			double n2 =sheet.getRow(i).getCell(1).getNumericCellValue();
+			String num2 = Double.toString(n2);
+			Actions input2= actions.moveToElement(driver.findElement(By.cssSelector("div.cwtlotc")));
+			input2.sendKeys(num2);
+			actions.build().perform();
+		    System.out.println(num2);
+			
+			driver.findElement(By.cssSelector(".cwbb-tpl > .cwbts")).click();
+			
+			WebElement n3=driver.findElement(By.cssSelector("div.cwtlotc"));
+			
+			String Result = n3.getText();
+			
+			
+			sheet.getRow(i).createCell(2).setCellValue("The Sum of Two Numbers is " +Result);
+			FileOutputStream fos=new FileOutputStream(src);
+			workbook.write(fos);
+			fos.close();
+	
+	
+	
+	
+}
+}
+}
+
